@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;color:#0B1E30;background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6}
+::selection{background:var(--accent,#0FB4CE);color:#fff}
+image-slot{display:block}
+input,select,textarea{font-family:'Be Vietnam Pro',system-ui,sans-serif}
+@keyframes eridanFade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+  <header style="position:sticky;top:0;z-index:60;background:#fff;box-shadow:0 1px 0 #E6EBF0">
+    <div style="background:#15466C;color:#8FA6B8;font-size:12.5px">
+      <div style="max-width:1200px;margin:0 auto;padding:0 24px;height:38px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+        <span style="letter-spacing:.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ t.top.tagline }}</span>
+        <div style="display:flex;align-items:center;gap:22px;flex-shrink:0">
+          <span style="color:#CBD9E4;font-weight:500">{{ t.top.phone }}</span>
+          <button onClick="{{ toggleLang }}" style="cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.25);color:#CBD9E4;font-size:12px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:2px">{{ langLabel }}</button>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:0 24px;height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <div onClick="{{ goHome }}" style="display:flex;align-items:center;gap:12px;cursor:pointer;flex-shrink:0">
+        <div style="width:42px;height:42px;background:#15466C;border-radius:4px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,var(--accent,#0FB4CE) 0%,transparent 60%);opacity:.55"></div>
+          <span style="position:relative;font-family:'Archivo',sans-serif;font-weight:900;color:#fff;font-size:22px">E</span>
+        </div>
+        <div style="line-height:1.05">
+          <div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:21px;letter-spacing:.06em;color:#0B1E30">ERIDAN</div>
+          <div style="font-size:10px;letter-spacing:.22em;color:#8593A0;font-weight:600">PONTOON SOLUTIONS</div>
+        </div>
+      </div>
+      <nav style="display:flex;align-items:center;gap:30px">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <span onClick="{{ item.onClick }}" style="{{ item.style }}">{{ item.label }}</span>
+        </sc-for>
+      </nav>
+      <button onClick="{{ goContact }}" style="cursor:pointer;background:var(--accent,#0FB4CE);color:#052733;border:none;font-weight:700;font-size:14px;letter-spacing:.02em;padding:12px 22px;border-radius:3px;flex-shrink:0">{{ t.cta }}</button>
+    </div>
+  </header>
+
+  <main style="flex:1">
+
+    <!-- ============ HOME ============ -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <section style="position:relative;background:#15466C;color:#fff;overflow:hidden">
+        <image-slot id="eridan-hero" shape="rect" placeholder="Ảnh cầu phao nổi / bến du thuyền" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+        <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,66,104,.9) 0%,rgba(20,66,104,.68) 42%,rgba(20,66,104,.28) 100%)"></div>
+        <div style="position:relative;max-width:1200px;margin:0 auto;padding:132px 24px 120px">
+          <div style="animation:eridanFade .6s ease both">
+            <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:var(--accent,#0FB4CE)">{{ t.hero.overline }}</div>
+            <h1 style="font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(38px,5.6vw,70px);line-height:1.04;letter-spacing:-.02em;margin:18px 0 0;max-width:880px">{{ t.hero.title }}</h1>
+            <p style="font-size:19px;color:#B9C9D6;max-width:640px;margin:22px 0 0">{{ t.hero.sub }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:38px">
+              <button onClick="{{ goContact }}" style="cursor:pointer;background:var(--accent,#0FB4CE);color:#052733;border:none;font-weight:700;font-size:16px;padding:15px 30px;border-radius:3px">{{ t.hero.ctaPrimary }}</button>
+              <button onClick="{{ goProjects }}" style="cursor:pointer;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);font-weight:600;font-size:16px;padding:15px 30px;border-radius:3px">{{ t.hero.ctaSecondary }}</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div style="background:#123E60;border-top:1px solid rgba(255,255,255,.09)">
+        <div style="max-width:1200px;margin:0 auto;padding:36px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+            <div style="text-align:center">
+              <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:42px;color:var(--accent,#0FB4CE);line-height:1">{{ s.n }}</div>
+              <div style="font-size:14px;color:#8FA6B8;margin-top:6px">{{ s.l }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <section style="background:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:92px 24px">
+          <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:var(--accent,#0FB4CE)">{{ t.prodSection.overline }}</div>
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(30px,3.6vw,44px);line-height:1.08;letter-spacing:-.01em;margin:12px 0 0;max-width:640px">{{ t.prodSection.title }}</h2>
+          <p style="font-size:17px;color:#5A6B7A;max-width:600px;margin:16px 0 0">{{ t.prodSection.sub }}</p>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px">
+            <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
+              <div style="border:1px solid #E6EBF0;border-radius:6px;overflow:hidden;background:#fff;display:flex;flex-direction:column">
+                <div style="height:158px;background:linear-gradient(135deg,#12324F 0%,#16496F 100%);position:relative;display:flex;align-items:flex-end;padding:16px">
+                  <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,#0FB4CE)"></div>
+                  <div style="position:absolute;right:14px;top:14px;font-family:'Archivo',sans-serif;font-weight:800;font-size:11px;letter-spacing:.16em;color:rgba(255,255,255,.42)">{{ p.tag }}</div>
+                  <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;color:#fff;line-height:1.15">{{ p.title }}</div>
+                </div>
+                <div style="padding:20px 20px 22px;flex:1;display:flex;flex-direction:column">
+                  <p style="font-size:14.5px;color:#5A6B7A;margin:0;flex:1">{{ p.desc }}</p>
+                  <span onClick="{{ goProducts }}" style="cursor:pointer;margin-top:16px;font-weight:700;font-size:14px;color:var(--accent,#0FB4CE)">Tìm hiểu thêm →</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#F4F7F9">
+        <div style="max-width:1200px;margin:0 auto;padding:88px 24px">
+          <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:var(--accent,#0FB4CE)">{{ t.whySection.overline }}</div>
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(30px,3.6vw,44px);letter-spacing:-.01em;margin:12px 0 44px">{{ t.whySection.title }}</h2>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px">
+            <sc-for list="{{ why }}" as="w" hint-placeholder-count="4">
+              <div style="background:#fff;border-radius:6px;padding:28px 24px;border-top:3px solid var(--accent,#0FB4CE);box-shadow:0 1px 2px rgba(11,30,48,.04)">
+                <h3 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:18px;margin:0 0 10px;color:#0B1E30">{{ w.title }}</h3>
+                <p style="font-size:14.5px;color:#5A6B7A;margin:0">{{ w.desc }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:92px 24px">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+            <div>
+              <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:var(--accent,#0FB4CE)">{{ t.projSection.overline }}</div>
+              <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(30px,3.6vw,44px);letter-spacing:-.01em;margin:12px 0 0">{{ t.projSection.title }}</h2>
+            </div>
+            <span onClick="{{ goProjects }}" style="cursor:pointer;font-weight:700;color:var(--accent,#0FB4CE);font-size:15px">{{ t.projSection.all }}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px">
+            <sc-for list="{{ projectsHome }}" as="pr" hint-placeholder-count="3">
+              <div style="position:relative;border-radius:6px;overflow:hidden;aspect-ratio:4/3;background:#15466C">
+                <image-slot id="{{ pr.id }}" shape="rect" placeholder="{{ pr.name }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+                <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(9,25,40,.9) 100%);pointer-events:none"></div>
+                <div style="position:absolute;left:18px;bottom:16px;right:18px;pointer-events:none">
+                  <div style="font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--accent,#0FB4CE);text-transform:uppercase">{{ pr.cat }}</div>
+                  <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;color:#fff;line-height:1.15;margin-top:4px">{{ pr.name }}</div>
+                  <div style="font-size:13px;color:#B9C9D6;margin-top:2px">{{ pr.loc }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#15466C;color:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:88px 24px">
+          <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:var(--accent,#0FB4CE)">{{ t.procSection.overline }}</div>
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(30px,3.6vw,44px);letter-spacing:-.01em;margin:12px 0 46px;color:#fff">{{ t.procSection.title }}</h2>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px">
+            <sc-for list="{{ process }}" as="st" hint-placeholder-count="5">
+              <div style="border-top:2px solid rgba(255,255,255,.14);padding-top:18px">
+                <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:34px;color:var(--accent,#0FB4CE);line-height:1">{{ st.n }}</div>
+                <h3 style="font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;margin:12px 0 8px;color:#fff">{{ st.title }}</h3>
+                <p style="font-size:13.5px;color:#93A6B6;margin:0">{{ st.desc }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:var(--accent,#0FB4CE)">
+        <div style="max-width:1200px;margin:0 auto;padding:64px 24px;display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap">
+          <div>
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(26px,3vw,38px);letter-spacing:-.01em;margin:0;color:#052733">{{ t.ctaBand.title }}</h2>
+            <p style="font-size:17px;color:#063845;margin:10px 0 0">{{ t.ctaBand.sub }}</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+            <button onClick="{{ goContact }}" style="cursor:pointer;background:#15466C;color:#fff;border:none;font-weight:700;font-size:16px;padding:15px 32px;border-radius:3px">{{ t.ctaBand.btn }}</button>
+            <span style="color:#063845;font-weight:600;font-size:15px">{{ t.ctaBand.phone }}</span>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ PRODUCTS ============ -->
+    <sc-if value="{{ isProducts }}">
+      <section style="background:#15466C;color:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:74px 24px">
+          <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:var(--accent,#0FB4CE)">{{ t.ph.products.overline }}</div>
+          <h1 style="font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(34px,4.6vw,54px);letter-spacing:-.02em;margin:14px 0 0">{{ t.ph.products.title }}</h1>
+          <p style="font-size:18px;color:#B9C9D6;max-width:620px;margin:16px 0 0">{{ t.ph.products.sub }}</p>
+        </div>
+      </section>
+      <section style="background:#F4F7F9">
+        <div style="max-width:1200px;margin:0 auto;padding:72px 24px">
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:26px">
+            <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
+              <div style="background:#fff;border:1px solid #E6EBF0;border-radius:8px;overflow:hidden;display:flex">
+                <div style="width:150px;flex-shrink:0;background:linear-gradient(160deg,#1B5583,#16496F);position:relative;display:flex;align-items:flex-end;padding:16px">
+                  <div style="position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent,#0FB4CE)"></div>
+                  <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.55)">{{ p.tag }}</div>
+                </div>
+                <div style="padding:24px 24px;flex:1">
+                  <h3 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:20px;margin:0 0 10px;color:#0B1E30">{{ p.title }}</h3>
+                  <p style="font-size:14.5px;color:#5A6B7A;margin:0 0 16px">{{ p.desc }}</p>
+                  <button onClick="{{ goContact }}" style="cursor:pointer;background:transparent;border:1px solid var(--accent,#0FB4CE);color:var(--accent,#0FB4CE);font-weight:700;font-size:13.5px;padding:9px 18px;border-radius:3px">{{ t.cta }} →</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ PROJECTS ============ -->
+    <sc-if value="{{ isProjects }}">
+      <section style="background:#15466C;color:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:74px 24px">
+          <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:var(--accent,#0FB4CE)">{{ t.ph.projects.overline }}</div>
+          <h1 style="font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(34px,4.6vw,54px);letter-spacing:-.02em;margin:14px 0 0">{{ t.ph.projects.title }}</h1>
+          <p style="font-size:18px;color:#B9C9D6;max-width:620px;margin:16px 0 0">{{ t.ph.projects.sub }}</p>
+        </div>
+      </section>
+      <section style="background:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:72px 24px">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+            <sc-for list="{{ projects }}" as="pr" hint-placeholder-count="6">
+              <div style="position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3;background:#15466C">
+                <image-slot id="{{ pr.id }}" shape="rect" placeholder="{{ pr.name }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+                <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 38%,rgba(9,25,40,.92) 100%);pointer-events:none"></div>
+                <div style="position:absolute;left:18px;bottom:16px;right:18px;pointer-events:none">
+                  <div style="font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--accent,#0FB4CE);text-transform:uppercase">{{ pr.cat }}</div>
+                  <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;color:#fff;line-height:1.15;margin-top:4px">{{ pr.name }}</div>
+                  <div style="font-size:13px;color:#B9C9D6;margin-top:2px">{{ pr.loc }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ ABOUT ============ -->
+    <sc-if value="{{ isAbout }}">
+      <section style="background:#15466C;color:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:74px 24px">
+          <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:var(--accent,#0FB4CE)">{{ t.ph.about.overline }}</div>
+          <h1 style="font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(34px,4.6vw,54px);letter-spacing:-.02em;margin:14px 0 0">{{ t.ph.about.title }}</h1>
+          <p style="font-size:18px;color:#B9C9D6;max-width:620px;margin:16px 0 0">{{ t.ph.about.sub }}</p>
+        </div>
+      </section>
+      <section style="background:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:80px 24px;display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center">
+          <div>
+            <p style="font-size:17px;color:#33475A;margin:0 0 18px">{{ t.aboutBody.p1 }}</p>
+            <p style="font-size:17px;color:#33475A;margin:0">{{ t.aboutBody.p2 }}</p>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px">
+              <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+                <div style="border-left:3px solid var(--accent,#0FB4CE);padding-left:16px">
+                  <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:32px;color:#0B1E30;line-height:1">{{ s.n }}</div>
+                  <div style="font-size:14px;color:#5A6B7A;margin-top:4px">{{ s.l }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <image-slot id="eridan-about" shape="rounded" radius="8" placeholder="Ảnh nhà máy / đội ngũ" style="width:100%;aspect-ratio:4/5"></image-slot>
+        </div>
+      </section>
+      <section style="background:#F4F7F9">
+        <div style="max-width:1200px;margin:0 auto;padding:80px 24px">
+          <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(26px,3.2vw,38px);letter-spacing:-.01em;margin:0 0 36px">{{ t.aboutBody.valuesTitle }}</h2>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px">
+            <sc-for list="{{ values }}" as="v" hint-placeholder-count="4">
+              <div style="background:#fff;border-radius:6px;padding:28px 24px;box-shadow:0 1px 2px rgba(11,30,48,.04)">
+                <h3 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:18px;margin:0 0 10px;color:var(--accent,#0FB4CE)">{{ v.title }}</h3>
+                <p style="font-size:14.5px;color:#5A6B7A;margin:0">{{ v.desc }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:52px">
+            <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:700;color:#5A6B7A;margin-bottom:18px">{{ t.capsTitle }}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:14px">
+              <sc-for list="{{ caps }}" as="c" hint-placeholder-count="4">
+                <div style="background:#fff;border:1px solid #DCE4EB;border-radius:40px;padding:10px 22px;font-weight:600;font-size:14.5px;color:#0B1E30;display:flex;align-items:center;gap:9px">
+                  <span style="color:var(--accent,#0FB4CE);font-weight:800">✓</span>{{ c }}
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ CONTACT ============ -->
+    <sc-if value="{{ isContact }}">
+      <section style="background:#15466C;color:#fff">
+        <div style="max-width:1200px;margin:0 auto;padding:74px 24px">
+          <div style="font-family:'Archivo',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;font-weight:700;color:var(--accent,#0FB4CE)">{{ t.ph.contact.overline }}</div>
+          <h1 style="font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(34px,4.6vw,54px);letter-spacing:-.02em;margin:14px 0 0">{{ t.ph.contact.title }}</h1>
+          <p style="font-size:18px;color:#B9C9D6;max-width:620px;margin:16px 0 0">{{ t.ph.contact.sub }}</p>
+        </div>
+      </section>
+      <section style="background:#F4F7F9">
+        <div style="max-width:1200px;margin:0 auto;padding:72px 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:start">
+          <div style="background:#fff;border:1px solid #E6EBF0;border-radius:10px;padding:38px">
+            <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+              <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:24px;margin:0 0 24px;color:#0B1E30">{{ t.contact.formTitle }}</h2>
+              <form onSubmit="{{ submit }}">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+                  <label style="display:block">
+                    <span style="display:block;font-size:13.5px;font-weight:600;color:#33475A;margin-bottom:7px">{{ t.contact.fields.name }}</span>
+                    <input required type="text" style="width:100%;border:1px solid #CFD9E1;border-radius:5px;padding:12px 14px;font-size:15px;color:#0B1E30" />
+                  </label>
+                  <label style="display:block">
+                    <span style="display:block;font-size:13.5px;font-weight:600;color:#33475A;margin-bottom:7px">{{ t.contact.fields.phone }}</span>
+                    <input required type="tel" style="width:100%;border:1px solid #CFD9E1;border-radius:5px;padding:12px 14px;font-size:15px;color:#0B1E30" />
+                  </label>
+                  <label style="display:block">
+                    <span style="display:block;font-size:13.5px;font-weight:600;color:#33475A;margin-bottom:7px">{{ t.contact.fields.email }}</span>
+                    <input type="email" style="width:100%;border:1px solid #CFD9E1;border-radius:5px;padding:12px 14px;font-size:15px;color:#0B1E30" />
+                  </label>
+                  <label style="display:block">
+                    <span style="display:block;font-size:13.5px;font-weight:600;color:#33475A;margin-bottom:7px">{{ t.contact.fields.product }}</span>
+                    <select style="width:100%;border:1px solid #CFD9E1;border-radius:5px;padding:12px 14px;font-size:15px;color:#0B1E30;background:#fff">
+                      <sc-for list="{{ productOpts }}" as="o" hint-placeholder-count="6">
+                        <option>{{ o }}</option>
+                      </sc-for>
+                    </select>
+                  </label>
+                </div>
+                <label style="display:block;margin-top:18px">
+                  <span style="display:block;font-size:13.5px;font-weight:600;color:#33475A;margin-bottom:7px">{{ t.contact.fields.message }}</span>
+                  <textarea rows="4" style="width:100%;border:1px solid #CFD9E1;border-radius:5px;padding:12px 14px;font-size:15px;color:#0B1E30;resize:vertical"></textarea>
+                </label>
+                <button type="submit" style="cursor:pointer;margin-top:22px;background:var(--accent,#0FB4CE);color:#052733;border:none;font-weight:700;font-size:16px;padding:15px 34px;border-radius:4px">{{ t.contact.button }}</button>
+              </form>
+            </sc-if>
+            <sc-if value="{{ submitted }}">
+              <div style="text-align:center;padding:40px 10px">
+                <div style="width:64px;height:64px;border-radius:50%;background:var(--accent,#0FB4CE);color:#052733;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;margin:0 auto 20px">✓</div>
+                <h2 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:26px;margin:0 0 10px;color:#0B1E30">{{ t.contact.thankTitle }}</h2>
+                <p style="font-size:16px;color:#5A6B7A;margin:0;max-width:360px;margin:0 auto">{{ t.contact.thankMsg }}</p>
+              </div>
+            </sc-if>
+          </div>
+          <div>
+            <div style="background:#15466C;color:#fff;border-radius:10px;padding:32px">
+              <h3 style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;margin:0 0 22px">{{ t.contact.infoTitle }}</h3>
+              <sc-for list="{{ contactInfo }}" as="i" hint-placeholder-count="4">
+                <div style="padding:14px 0;border-top:1px solid rgba(255,255,255,.1)">
+                  <div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent,#0FB4CE);font-weight:700">{{ i.label }}</div>
+                  <div style="font-size:15.5px;color:#DCE6EE;margin-top:4px">{{ i.value }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:20px;border-radius:10px;overflow:hidden;background:#DCE4EB;height:220px;position:relative;display:flex;align-items:center;justify-content:center">
+              <image-slot id="eridan-map" shape="rect" placeholder="{{ t.contact.mapNote }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+  </main>
+
+  <footer style="background:#0F3252;color:#9DB4C6">
+    <div style="max-width:1200px;margin:0 auto;padding:60px 24px 30px;display:grid;grid-template-columns:1.6fr 1fr 1.2fr;gap:40px">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="width:38px;height:38px;background:#15466C;border-radius:4px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,var(--accent,#0FB4CE) 0%,transparent 60%);opacity:.6"></div>
+            <span style="position:relative;font-family:'Archivo',sans-serif;font-weight:900;color:#fff;font-size:19px">E</span>
+          </div>
+          <div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:20px;letter-spacing:.06em;color:#fff">ERIDAN</div>
+        </div>
+        <p style="font-size:14.5px;max-width:380px;margin:0">{{ t.footer.blurb }}</p>
+      </div>
+      <div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:16px">{{ t.footer.linksTitle }}</div>
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <div onClick="{{ item.onClick }}" style="cursor:pointer;font-size:14.5px;padding:6px 0;color:#8FA6B8">{{ item.label }}</div>
+        </sc-for>
+      </div>
+      <div>
+        <div style="font-family:'Archivo',sans-serif;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:16px">{{ t.footer.contactTitle }}</div>
+        <sc-for list="{{ contactInfo }}" as="i" hint-placeholder-count="4">
+          <div style="font-size:14.5px;padding:5px 0"><span style="color:#5E7181">{{ i.label }}: </span>{{ i.value }}</div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.08)">
+      <div style="max-width:1200px;margin:0 auto;padding:20px 24px;font-size:13px;color:#5E7181">{{ t.footer.rights }}</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0FB4CE&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#0FB4CE&quot;,&quot;#1E7FB8&quot;,&quot;#F0803C&quot;,&quot;#2FA36B&quot;]},&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;default&quot;:&quot;vi&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { page: 'home', lang: (this.props.defaultLang === 'en' ? 'en' : 'vi'), submitted: false };
+
+  applyAccent(){ try { document.documentElement.style.setProperty('--accent', this.props.accent || '#0FB4CE'); } catch(e){} }
+  componentDidMount(){ this.applyAccent(); }
+  componentDidUpdate(){ this.applyAccent(); }
+
+  go(page){ this.setState({ page: page, submitted: false }); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e){} }
+  submit(e){ if (e && e.preventDefault) e.preventDefault(); this.setState({ submitted: true }); }
+
+  renderVals(){
+    const page = this.state.page;
+    const lang = this.state.lang;
+
+    const DICT = {
+      vi: {
+        nav: { home:'Trang chủ', products:'Sản phẩm', projects:'Dự án', about:'Giới thiệu', contact:'Liên hệ' },
+        cta: 'Nhận báo giá',
+        top: { tagline:'Giải pháp cầu phao nổi & bến du thuyền HDPE hàng đầu Việt Nam', phone:'Hotline: 1900 6789' },
+        hero: {
+          overline:'ERIDAN — Pontoon Solutions',
+          title:'Kiến tạo công trình nổi bền vững trên mọi mặt nước',
+          sub:'ERIDAN thiết kế, sản xuất và thi công trọn gói hệ thống cầu phao nổi HDPE, bến du thuyền và sàn nổi đa năng — module hoá, chịu tải cao, lắp đặt nhanh.',
+          ctaPrimary:'Nhận tư vấn & báo giá', ctaSecondary:'Xem dự án tiêu biểu'
+        },
+        stats: [ {n:'15+',l:'Năm kinh nghiệm'}, {n:'200+',l:'Dự án bàn giao'}, {n:'50.000+',l:'m² mặt sàn nổi'}, {n:'34',l:'Tỉnh thành phục vụ'} ],
+        prodSection: { overline:'Sản phẩm & Giải pháp', title:'Hệ sinh thái công trình nổi trọn gói', sub:'Từ cầu phao dân sinh đến bến du thuyền tiêu chuẩn quốc tế — tất cả trên nền tảng module HDPE bền vững.' },
+        products: [
+          {tag:'HDPE', title:'Cầu phao nổi HDPE', desc:'Phao nổi module HDPE nguyên sinh, chống UV, chịu tải lớn, ghép nối linh hoạt cho mọi địa hình mặt nước.'},
+          {tag:'MARINA', title:'Bến du thuyền (Marina)', desc:'Hệ thống neo đậu du thuyền, ca nô đạt chuẩn quốc tế với phao chính, finger và trụ dẫn hướng.'},
+          {tag:'PLATFORM', title:'Sàn nổi đa năng', desc:'Sân khấu nổi, cafe nổi, bể bơi nổi, đường dạo nổi — tuỳ biến theo công năng và tải trọng.'},
+          {tag:'RESORT', title:'Nhà nổi & Bungalow nổi', desc:'Kết cấu nhà nổi cho khu nghỉ dưỡng, an toàn và ổn định trong điều kiện sóng gió.'},
+          {tag:'JETTY', title:'Cầu tàu & cầu dẫn', desc:'Cầu dẫn (gangway) lên xuống theo thuỷ triều, lan can và mặt sàn chống trượt.'},
+          {tag:'PARTS', title:'Neo đậu & phụ kiện', desc:'Hệ neo, xích, phao neo, cọc dẫn hướng, khớp nối và phụ kiện đồng bộ chính hãng.'}
+        ],
+        whySection: { overline:'Vì sao chọn ERIDAN', title:'Bền vững, an toàn và linh hoạt' },
+        why: [
+          {title:'Vật liệu HDPE cao cấp', desc:'HDPE nguyên sinh chống tia UV, không thấm, không han gỉ, tuổi thọ trên 25 năm.'},
+          {title:'Module hoá linh hoạt', desc:'Ghép nối tự do theo diện tích và hình dạng, dễ mở rộng, di dời và tái sử dụng.'},
+          {title:'Chịu tải & an toàn cao', desc:'Kết cấu tính toán theo tải trọng thực tế, ổn định trong sóng gió.'},
+          {title:'Thi công nhanh gọn', desc:'Lắp ghép tại chỗ, không cần thiết bị nặng, rút ngắn tiến độ và chi phí.'}
+        ],
+        projSection: { overline:'Dự án tiêu biểu', title:'Những công trình chúng tôi tự hào', all:'Xem tất cả dự án →' },
+        projects: [
+          {name:'Bến du thuyền Hạ Long', cat:'Marina', loc:'Quảng Ninh'},
+          {name:'Sàn nổi sự kiện Hồ Tây', cat:'Sàn nổi', loc:'Hà Nội'},
+          {name:'Cầu phao du lịch Phong Nha', cat:'Cầu phao', loc:'Quảng Bình'},
+          {name:'Khu nghỉ dưỡng nổi Phú Quốc', cat:'Nhà nổi', loc:'Kiên Giang'},
+          {name:'Bến ca nô Đà Nẵng', cat:'Marina', loc:'Đà Nẵng'},
+          {name:'Cafe nổi hồ Xuân Hương', cat:'Sàn nổi', loc:'Lâm Đồng'}
+        ],
+        procSection: { overline:'Quy trình', title:'Trọn gói từ khảo sát đến bàn giao' },
+        process: [
+          {n:'01', title:'Khảo sát & tư vấn', desc:'Đánh giá mặt nước, thuỷ văn và nhu cầu sử dụng.'},
+          {n:'02', title:'Thiết kế & mô phỏng', desc:'Bản vẽ kỹ thuật, tính toán tải trọng và neo đậu.'},
+          {n:'03', title:'Sản xuất', desc:'Gia công module HDPE tại nhà máy đạt chuẩn.'},
+          {n:'04', title:'Lắp đặt', desc:'Thi công, neo đậu và bàn giao tại công trình.'},
+          {n:'05', title:'Bảo trì', desc:'Bảo hành dài hạn và bảo trì định kỳ.'}
+        ],
+        ctaBand: { title:'Sẵn sàng cho dự án nổi của bạn?', sub:'Nhận tư vấn kỹ thuật và báo giá chi tiết trong 24 giờ.', btn:'Liên hệ ngay', phone:'hoặc gọi Hotline 1900 6789' },
+        ph: {
+          products: { overline:'Sản phẩm', title:'Giải pháp công trình nổi HDPE', sub:'Sáu dòng sản phẩm cốt lõi, tuỳ biến cho từng công trình.' },
+          projects: { overline:'Dự án', title:'Công trình đã bàn giao', sub:'Tuyển tập các dự án cầu nổi, marina và sàn nổi tiêu biểu.' },
+          about: { overline:'Về chúng tôi', title:'Công ty Cổ phần ERIDAN', sub:'Đối tác tin cậy cho mọi công trình trên mặt nước.' },
+          contact: { overline:'Liên hệ', title:'Nhận báo giá & tư vấn', sub:'Để lại thông tin, đội ngũ kỹ sư ERIDAN sẽ phản hồi trong 24 giờ.' }
+        },
+        aboutBody: {
+          p1:'Công ty Cổ phần ERIDAN chuyên thiết kế, sản xuất và thi công các giải pháp công trình nổi trên nền tảng vật liệu HDPE cao cấp: cầu phao nổi, bến du thuyền, sàn nổi đa năng và nhà nổi.',
+          p2:'Với hơn 15 năm kinh nghiệm và hơn 200 dự án bàn giao trên khắp cả nước, ERIDAN cam kết mang đến những công trình bền vững, an toàn và thân thiện với môi trường.',
+          valuesTitle:'Giá trị cốt lõi'
+        },
+        values: [
+          {title:'Chất lượng', desc:'Vật liệu và quy trình đạt chuẩn, kiểm soát nghiêm ngặt.'},
+          {title:'An toàn', desc:'Ưu tiên hàng đầu trong thiết kế và thi công.'},
+          {title:'Bền vững', desc:'Giải pháp thân thiện môi trường, tuổi thọ dài.'},
+          {title:'Tận tâm', desc:'Đồng hành cùng khách hàng từ ý tưởng đến vận hành.'}
+        ],
+        capsTitle:'Năng lực & Chứng nhận',
+        caps: ['ISO 9001:2015', 'HDPE nguyên sinh đạt chuẩn', 'Đội ngũ kỹ sư chuyên trách', 'Bảo hành đến 10 năm'],
+        contact: {
+          formTitle:'Gửi yêu cầu báo giá',
+          fields: { name:'Họ và tên', phone:'Số điện thoại', email:'Email', product:'Sản phẩm quan tâm', message:'Nội dung yêu cầu' },
+          productOpts:['Cầu phao nổi HDPE','Bến du thuyền (Marina)','Sàn nổi đa năng','Nhà nổi','Cầu tàu & cầu dẫn','Khác'],
+          button:'Gửi yêu cầu',
+          thankTitle:'Cảm ơn bạn!',
+          thankMsg:'Yêu cầu đã được ghi nhận. Đội ngũ ERIDAN sẽ liên hệ trong thời gian sớm nhất.',
+          infoTitle:'Thông tin liên hệ',
+          info: [
+            {label:'Trụ sở', value:'Lô X, KCN ABC, Việt Nam'},
+            {label:'Hotline', value:'1900 6789'},
+            {label:'Email', value:'info@eridan.vn'},
+            {label:'Giờ làm việc', value:'T2 – T7, 8:00 – 17:30'}
+          ],
+          mapNote:'Bản đồ / vị trí văn phòng'
+        },
+        footer: {
+          blurb:'ERIDAN — Giải pháp cầu phao nổi, bến du thuyền và sàn nổi HDPE trọn gói trên khắp Việt Nam.',
+          linksTitle:'Liên kết', contactTitle:'Liên hệ',
+          rights:'© 2026 Công ty Cổ phần ERIDAN. Bảo lưu mọi quyền.'
+        }
+      },
+      en: {
+        nav: { home:'Home', products:'Products', projects:'Projects', about:'About', contact:'Contact' },
+        cta: 'Get a quote',
+        top: { tagline:"Vietnam's leading HDPE floating pontoon & marina solutions", phone:'Hotline: 1900 6789' },
+        hero: {
+          overline:'ERIDAN — Pontoon Solutions',
+          title:'Building durable floating structures on any water surface',
+          sub:'ERIDAN designs, manufactures and installs turnkey HDPE floating pontoons, marinas and multi-purpose platforms — modular, high load capacity, fast to install.',
+          ctaPrimary:'Get consultation & quote', ctaSecondary:'View featured projects'
+        },
+        stats: [ {n:'15+',l:'Years of experience'}, {n:'200+',l:'Projects delivered'}, {n:'50,000+',l:'m² of floating decks'}, {n:'34',l:'Provinces served'} ],
+        prodSection: { overline:'Products & Solutions', title:'A complete floating-structure ecosystem', sub:'From public pontoons to international-standard marinas — all built on a durable modular HDPE platform.' },
+        products: [
+          {tag:'HDPE', title:'HDPE Floating Pontoons', desc:'Virgin HDPE modular floats — UV-resistant, high load capacity, flexibly connected for any water terrain.'},
+          {tag:'MARINA', title:'Marina Berths', desc:'International-standard yacht and boat mooring systems with main floats, fingers and guide piles.'},
+          {tag:'PLATFORM', title:'Multi-purpose Platforms', desc:'Floating stages, cafés, pools and walkways — customized to function and load requirements.'},
+          {tag:'RESORT', title:'Floating Houses & Bungalows', desc:'Floating house structures for resorts — safe and stable in wind and waves.'},
+          {tag:'JETTY', title:'Jetties & Gangways', desc:'Tide-adjusting gangways, jetties, railings and anti-slip decking.'},
+          {tag:'PARTS', title:'Anchoring & Accessories', desc:'Anchor systems, chains, buoys, guide piles, connectors and genuine accessories.'}
+        ],
+        whySection: { overline:'Why ERIDAN', title:'Durable, safe and flexible' },
+        why: [
+          {title:'Premium HDPE material', desc:'Virgin HDPE — UV-resistant, waterproof, rust-free, 25+ year lifespan.'},
+          {title:'Flexible modularity', desc:'Freely assembled by area and shape, easy to expand, relocate and reuse.'},
+          {title:'High load & safety', desc:'Structures engineered to real load, stable in wind and waves.'},
+          {title:'Fast installation', desc:'On-site assembly without heavy machinery — shorter timelines, lower cost.'}
+        ],
+        projSection: { overline:'Featured projects', title:'Projects we are proud of', all:'View all projects →' },
+        projects: [
+          {name:'Ha Long Marina', cat:'Marina', loc:'Quang Ninh'},
+          {name:'West Lake Floating Stage', cat:'Platform', loc:'Hanoi'},
+          {name:'Phong Nha Tourist Pontoon', cat:'Pontoon', loc:'Quang Binh'},
+          {name:'Phu Quoc Floating Resort', cat:'Floating house', loc:'Kien Giang'},
+          {name:'Da Nang Boat Berth', cat:'Marina', loc:'Da Nang'},
+          {name:'Xuan Huong Floating Café', cat:'Platform', loc:'Lam Dong'}
+        ],
+        procSection: { overline:'Process', title:'Turnkey from survey to handover' },
+        process: [
+          {n:'01', title:'Survey & consult', desc:'Assess water conditions, hydrology and needs.'},
+          {n:'02', title:'Design & simulate', desc:'Technical drawings, load and anchoring calculations.'},
+          {n:'03', title:'Manufacture', desc:'HDPE modules produced at a certified factory.'},
+          {n:'04', title:'Install', desc:'Construction, anchoring and on-site handover.'},
+          {n:'05', title:'Maintain', desc:'Long warranty and periodic maintenance.'}
+        ],
+        ctaBand: { title:'Ready for your floating project?', sub:'Get technical consultation and a detailed quote within 24 hours.', btn:'Contact now', phone:'or call Hotline 1900 6789' },
+        ph: {
+          products: { overline:'Products', title:'HDPE floating-structure solutions', sub:'Six core product lines, customized for every project.' },
+          projects: { overline:'Projects', title:'Delivered projects', sub:'A selection of our featured pontoon, marina and platform projects.' },
+          about: { overline:'About us', title:'ERIDAN Joint Stock Company', sub:'A trusted partner for every structure on the water.' },
+          contact: { overline:'Contact', title:'Get a quote & consultation', sub:"Leave your details — ERIDAN's engineers will respond within 24 hours." }
+        },
+        aboutBody: {
+          p1:'ERIDAN Joint Stock Company specializes in designing, manufacturing and installing floating-structure solutions built on premium HDPE: floating pontoons, marinas, multi-purpose platforms and floating houses.',
+          p2:'With over 15 years of experience and 200+ projects delivered nationwide, ERIDAN is committed to durable, safe and environmentally friendly structures.',
+          valuesTitle:'Core values'
+        },
+        values: [
+          {title:'Quality', desc:'Certified materials and processes, tightly controlled.'},
+          {title:'Safety', desc:'The top priority in design and construction.'},
+          {title:'Sustainability', desc:'Eco-friendly solutions with a long lifespan.'},
+          {title:'Dedication', desc:'With clients from idea to operation.'}
+        ],
+        capsTitle:'Capabilities & Certifications',
+        caps: ['ISO 9001:2015', 'Certified virgin HDPE', 'Dedicated engineering team', 'Up to 10-year warranty'],
+        contact: {
+          formTitle:'Request a quote',
+          fields: { name:'Full name', phone:'Phone number', email:'Email', product:'Product of interest', message:'Your message' },
+          productOpts:['HDPE Floating Pontoons','Marina Berths','Multi-purpose Platforms','Floating Houses','Jetties & Gangways','Other'],
+          button:'Send request',
+          thankTitle:'Thank you!',
+          thankMsg:'Your request has been received. The ERIDAN team will contact you shortly.',
+          infoTitle:'Contact information',
+          info: [
+            {label:'Head office', value:'Lot X, ABC Industrial Park, Vietnam'},
+            {label:'Hotline', value:'1900 6789'},
+            {label:'Email', value:'info@eridan.vn'},
+            {label:'Working hours', value:'Mon – Sat, 8:00 – 17:30'}
+          ],
+          mapNote:'Map / office location'
+        },
+        footer: {
+          blurb:'ERIDAN — Turnkey HDPE floating pontoon, marina and platform solutions across Vietnam.',
+          linksTitle:'Links', contactTitle:'Contact',
+          rights:'© 2026 ERIDAN Joint Stock Company. All rights reserved.'
+        }
+      }
+    };
+
+    const t = DICT[lang] || DICT.vi;
+
+    const navKeys = ['home','products','projects','about','contact'];
+    const navItems = navKeys.map((k) => ({
+      key: k,
+      label: t.nav[k],
+      onClick: () => this.go(k),
+      style: {
+        cursor:'pointer', fontFamily:"'Be Vietnam Pro',sans-serif", fontSize:'15px', fontWeight:600,
+        letterSpacing:'0.01em', padding:'6px 0', whiteSpace:'nowrap',
+        color: page===k ? 'var(--accent,#0FB4CE)' : '#0B1E30',
+        borderBottom: page===k ? '2px solid var(--accent,#0FB4CE)' : '2px solid transparent'
+      }
+    }));
+
+    const projects = t.projects.map((p, i) => ({ ...p, id: 'eridan-proj-' + i }));
+    const projectsHome = projects.slice(0, 3).map((p) => ({ ...p, id: p.id + '-home' }));
+
+    return {
+      lang, t, page,
+      isHome: page==='home', isProducts: page==='products', isProjects: page==='projects', isAbout: page==='about', isContact: page==='contact',
+      navItems,
+      langLabel: lang==='vi' ? 'EN' : 'VI',
+      toggleLang: () => this.setState((s) => ({ lang: s.lang==='vi' ? 'en' : 'vi' })),
+      goHome: () => this.go('home'),
+      goProducts: () => this.go('products'),
+      goProjects: () => this.go('projects'),
+      goContact: () => this.go('contact'),
+      submit: (e) => this.submit(e),
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      products: t.products,
+      projects,
+      projectsHome,
+      why: t.why, process: t.process, stats: t.stats, caps: t.caps, values: t.values,
+      productOpts: t.contact.productOpts,
+      contactInfo: t.contact.info
+    };
+  }
+}
+</script>
+</body>
+</html>

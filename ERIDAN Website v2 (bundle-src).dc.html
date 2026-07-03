@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="ext-resource-dependency" content="assets/proj-marina.png" data-resource-id="projMarina" />
+<meta name="ext-resource-dependency" content="assets/proj-platform.png" data-resource-id="projPlatform" />
+<meta name="ext-resource-dependency" content="assets/proj-bridge.png" data-resource-id="projBridge" />
+<meta name="ext-resource-dependency" content="assets/proj-bungalow.png" data-resource-id="projBungalow" />
+<meta name="ext-resource-dependency" content="assets/proj-berth.png" data-resource-id="projBerth" />
+<meta name="ext-resource-dependency" content="assets/proj-cafe.png" data-resource-id="projCafe" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#16302B">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#16302B"/>
+    <rect y="470" width="1200" height="330" fill="#0E211D"/>
+    <circle cx="680" cy="470" r="46" fill="#B08341"/>
+    <polygon points="520,470 560,470 700,800 380,800" fill="#0E211D"/>
+    <text x="600" y="270" text-anchor="middle" font-family="Georgia, serif" font-size="120" letter-spacing="18" fill="#F5F1E8">ERIDAN</text>
+    <text x="600" y="330" text-anchor="middle" font-family="sans-serif" font-size="26" letter-spacing="10" fill="#B08341">PONTOON · MARINA · PLATFORM</text>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;color:#1C302B;background:#F5F1E8;-webkit-font-smoothing:antialiased;line-height:1.65}
+::selection{background:var(--accent,#B08341);color:#F5F1E8}
+image-slot{display:block}
+input,select,textarea{font-family:'Be Vietnam Pro',system-ui,sans-serif}
+.serif{font-family:'Newsreader',Georgia,serif}
+@keyframes eridanRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;background:#F5F1E8">
+
+  <header style="position:sticky;top:0;z-index:60;background:#F5F1E8;border-bottom:1px solid rgba(28,48,43,.14)">
+    <div style="max-width:1240px;margin:0 auto;padding:9px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(28,48,43,.08)">
+      <span style="font-size:12.5px;color:#8A8375;letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ t.top.tagline }}</span>
+      <div style="display:flex;align-items:center;gap:22px;flex-shrink:0">
+        <span style="font-size:12.5px;color:#1C302B;font-weight:500">{{ t.top.phone }}</span>
+        <button onClick="{{ toggleLang }}" style="cursor:pointer;background:transparent;border:1px solid rgba(28,48,43,.28);color:#1C302B;font-size:11.5px;font-weight:600;letter-spacing:.1em;padding:3px 11px;border-radius:1px">{{ langLabel }}</button>
+      </div>
+    </div>
+    <div style="max-width:1240px;margin:0 auto;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <div onClick="{{ goHome }}" style="cursor:pointer;flex-shrink:0;line-height:1">
+        <div class="serif" style="font-weight:400;font-size:27px;letter-spacing:.24em;color:#1C302B">ERIDAN</div>
+        <div style="font-size:9.5px;letter-spacing:.34em;color:#8A8375;font-weight:500;margin-top:3px">PONTOON&nbsp;·&nbsp;MARINA&nbsp;·&nbsp;PLATFORM</div>
+      </div>
+      <nav style="display:flex;align-items:center;gap:34px">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <span onClick="{{ item.onClick }}" style="{{ item.style }}">{{ item.label }}</span>
+        </sc-for>
+      </nav>
+      <span onClick="{{ goContact }}" style="cursor:pointer;flex-shrink:0;font-size:13px;font-weight:600;letter-spacing:.04em;color:#1C302B;border-bottom:1px solid var(--accent,#B08341);padding-bottom:3px">{{ t.cta }}</span>
+    </div>
+  </header>
+
+  <main style="flex:1">
+
+    <!-- ============ HOME ============ -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <section style="position:relative;background:#16302B;color:#F5F1E8;overflow:hidden;min-height:640px;display:flex;align-items:flex-end">
+        <image-slot id="eridan-hero" src="assets/hero.png" shape="rect" placeholder="Ảnh cầu phao / bến du thuyền — kéo thả vào đây" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,48,43,.5) 0%,rgba(22,48,43,.2) 45%,rgba(22,48,43,.88) 100%)"></div>
+        <div style="position:relative;max-width:1240px;margin:0 auto;padding:0 40px 76px;width:100%">
+          <div style="animation:eridanRise .7s ease both;max-width:820px">
+            <div style="font-size:12.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ t.hero.overline }}</div>
+            <h1 class="serif" style="font-weight:400;font-size:clamp(42px,6vw,78px);line-height:1.03;letter-spacing:-.01em;margin:22px 0 0;color:#F5F1E8">{{ t.hero.title }}</h1>
+            <p style="font-size:18px;color:#CFD4C9;max-width:600px;margin:24px 0 0;font-weight:300">{{ t.hero.sub }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:34px;margin-top:38px;align-items:center">
+              <span onClick="{{ goContact }}" style="cursor:pointer;font-size:15px;font-weight:500;color:#F5F1E8;border-bottom:1px solid var(--accent,#B08341);padding-bottom:5px">{{ t.hero.ctaPrimary }} →</span>
+              <span onClick="{{ goProjects }}" style="cursor:pointer;font-size:15px;font-weight:400;color:#CFD4C9;border-bottom:1px solid rgba(207,212,201,.4);padding-bottom:5px">{{ t.hero.ctaSecondary }}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#F5F1E8;border-bottom:1px solid rgba(28,48,43,.14)">
+        <div style="max-width:1240px;margin:0 auto;padding:44px 40px;display:grid;grid-template-columns:repeat(4,1fr)">
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+            <div style="padding:0 26px;border-left:1px solid rgba(28,48,43,.14)">
+              <div class="serif" style="font-weight:400;font-size:46px;color:#1C302B;line-height:1">{{ s.n }}</div>
+              <div style="font-size:13.5px;color:#8A8375;margin-top:8px;letter-spacing:.02em">{{ s.l }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="background:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:104px 40px">
+          <div style="display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:end;margin-bottom:64px">
+            <div>
+              <div style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ t.prodSection.overline }}</div>
+              <h2 class="serif" style="font-weight:400;font-size:clamp(32px,4vw,50px);line-height:1.08;letter-spacing:-.01em;margin:16px 0 0;color:#1C302B">{{ t.prodSection.title }}</h2>
+            </div>
+            <p style="font-size:16.5px;color:#5C665C;margin:0;font-weight:300;padding-bottom:8px">{{ t.prodSection.sub }}</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(28,48,43,.16)">
+            <sc-for list="{{ productsIdx }}" as="p" hint-placeholder-count="6">
+              <div onClick="{{ goProducts }}" style="cursor:pointer;padding:32px 30px 34px;border-bottom:1px solid rgba(28,48,43,.16);border-right:1px solid rgba(28,48,43,.16)">
+                <div style="display:flex;align-items:baseline;justify-content:space-between">
+                  <span class="serif" style="font-size:15px;color:var(--accent,#B08341)">{{ p.no }}</span>
+                  <span style="font-size:10.5px;letter-spacing:.16em;color:#A8A293;font-weight:600">{{ p.tag }}</span>
+                </div>
+                <h3 class="serif" style="font-weight:400;font-size:23px;line-height:1.2;margin:22px 0 12px;color:#1C302B">{{ p.title }}</h3>
+                <p style="font-size:14.5px;color:#5C665C;margin:0;font-weight:300">{{ p.desc }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#EDE7D9">
+        <div style="max-width:1240px;margin:0 auto;padding:100px 40px">
+          <div style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ t.whySection.overline }}</div>
+          <h2 class="serif" style="font-weight:400;font-size:clamp(32px,4vw,50px);letter-spacing:-.01em;margin:16px 0 56px;color:#1C302B;max-width:640px">{{ t.whySection.title }}</h2>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:36px">
+            <sc-for list="{{ whyIdx }}" as="w" hint-placeholder-count="4">
+              <div style="border-top:1px solid rgba(28,48,43,.24);padding-top:22px">
+                <div class="serif" style="font-size:15px;color:var(--accent,#B08341);margin-bottom:16px">{{ w.no }}</div>
+                <h3 class="serif" style="font-weight:400;font-size:20px;margin:0 0 10px;color:#1C302B;line-height:1.25">{{ w.title }}</h3>
+                <p style="font-size:14px;color:#5C665C;margin:0;font-weight:300">{{ w.desc }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:100px 40px">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:48px">
+            <div>
+              <div style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ t.projSection.overline }}</div>
+              <h2 class="serif" style="font-weight:400;font-size:clamp(32px,4vw,50px);letter-spacing:-.01em;margin:16px 0 0;color:#1C302B">{{ t.projSection.title }}</h2>
+            </div>
+            <span onClick="{{ goProjects }}" style="cursor:pointer;font-size:14px;font-weight:500;color:#1C302B;border-bottom:1px solid var(--accent,#B08341);padding-bottom:4px">{{ t.projSection.all }}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px">
+            <sc-for list="{{ projectsHome }}" as="pr" hint-placeholder-count="3">
+              <div onClick="{{ goProjects }}" style="cursor:pointer">
+                <div style="position:relative;overflow:hidden;aspect-ratio:4/5;background:#16302B">
+                  <image-slot id="{{ pr.id }}" src="{{ pr.img }}" shape="rect" placeholder="{{ pr.name }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+                </div>
+                <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600;margin-top:18px">{{ pr.cat }}</div>
+                <h3 class="serif" style="font-weight:400;font-size:21px;color:#1C302B;line-height:1.2;margin:8px 0 2px">{{ pr.name }}</h3>
+                <div style="font-size:13.5px;color:#8A8375">{{ pr.loc }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#16302B;color:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:100px 40px">
+          <div style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ t.procSection.overline }}</div>
+          <h2 class="serif" style="font-weight:400;font-size:clamp(32px,4vw,50px);letter-spacing:-.01em;margin:16px 0 58px;color:#F5F1E8;max-width:640px">{{ t.procSection.title }}</h2>
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:26px">
+            <sc-for list="{{ process }}" as="st" hint-placeholder-count="5">
+              <div style="border-top:1px solid rgba(245,241,232,.24);padding-top:22px">
+                <div class="serif" style="font-weight:300;font-size:40px;color:var(--accent,#B08341);line-height:1">{{ st.n }}</div>
+                <h3 class="serif" style="font-weight:400;font-size:18px;margin:16px 0 8px;color:#F5F1E8;line-height:1.25">{{ st.title }}</h3>
+                <p style="font-size:13px;color:#A9B3A6;margin:0;font-weight:300">{{ st.desc }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="background:#F5F1E8;border-top:1px solid rgba(28,48,43,.14)">
+        <div style="max-width:1240px;margin:0 auto;padding:84px 40px;display:flex;align-items:center;justify-content:space-between;gap:36px;flex-wrap:wrap">
+          <div style="max-width:640px">
+            <h2 class="serif" style="font-weight:400;font-size:clamp(28px,3.4vw,44px);letter-spacing:-.01em;margin:0;color:#1C302B;line-height:1.1">{{ t.ctaBand.title }}</h2>
+            <p style="font-size:16.5px;color:#5C665C;margin:14px 0 0;font-weight:300">{{ t.ctaBand.sub }}</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+            <span onClick="{{ goContact }}" style="cursor:pointer;background:#16302B;color:#F5F1E8;font-size:15px;font-weight:500;padding:15px 34px;letter-spacing:.02em">{{ t.ctaBand.btn }}</span>
+            <span style="color:#8A8375;font-weight:400;font-size:14px">{{ t.ctaBand.phone }}</span>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ PRODUCTS ============ -->
+    <sc-if value="{{ isProducts }}">
+      <section style="background:#16302B;color:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:88px 40px">
+          <div style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ t.ph.products.overline }}</div>
+          <h1 class="serif" style="font-weight:400;font-size:clamp(38px,5vw,62px);letter-spacing:-.01em;margin:18px 0 0;line-height:1.05">{{ t.ph.products.title }}</h1>
+          <p style="font-size:17px;color:#CFD4C9;max-width:600px;margin:18px 0 0;font-weight:300">{{ t.ph.products.sub }}</p>
+        </div>
+      </section>
+      <section style="background:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:24px 40px 96px">
+          <sc-for list="{{ productsIdx }}" as="p" hint-placeholder-count="6">
+            <div style="display:grid;grid-template-columns:90px 1fr auto;gap:32px;align-items:start;padding:38px 0;border-bottom:1px solid rgba(28,48,43,.16)">
+              <div class="serif" style="font-weight:300;font-size:40px;color:var(--accent,#B08341);line-height:1">{{ p.no }}</div>
+              <div style="max-width:640px">
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px">
+                  <h3 class="serif" style="font-weight:400;font-size:26px;margin:0;color:#1C302B">{{ p.title }}</h3>
+                  <span style="font-size:10.5px;letter-spacing:.16em;color:#A8A293;font-weight:600;border:1px solid rgba(28,48,43,.2);padding:2px 8px">{{ p.tag }}</span>
+                </div>
+                <p style="font-size:15.5px;color:#5C665C;margin:0;font-weight:300">{{ p.desc }}</p>
+              </div>
+              <span onClick="{{ goContact }}" style="cursor:pointer;white-space:nowrap;font-size:13.5px;font-weight:500;color:#1C302B;border-bottom:1px solid var(--accent,#B08341);padding-bottom:3px">{{ t.cta }} →</span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ PROJECTS ============ -->
+    <sc-if value="{{ isProjects }}">
+      <section style="background:#16302B;color:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:88px 40px">
+          <div style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ t.ph.projects.overline }}</div>
+          <h1 class="serif" style="font-weight:400;font-size:clamp(38px,5vw,62px);letter-spacing:-.01em;margin:18px 0 0;line-height:1.05">{{ t.ph.projects.title }}</h1>
+          <p style="font-size:17px;color:#CFD4C9;max-width:600px;margin:18px 0 0;font-weight:300">{{ t.ph.projects.sub }}</p>
+        </div>
+      </section>
+      <section style="background:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:80px 40px">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px 26px">
+            <sc-for list="{{ projects }}" as="pr" hint-placeholder-count="6">
+              <div>
+                <div style="position:relative;overflow:hidden;aspect-ratio:4/5;background:#16302B">
+                  <image-slot id="{{ pr.id }}" src="{{ pr.img }}" shape="rect" placeholder="{{ pr.name }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+                </div>
+                <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600;margin-top:18px">{{ pr.cat }}</div>
+                <h3 class="serif" style="font-weight:400;font-size:22px;color:#1C302B;line-height:1.2;margin:8px 0 2px">{{ pr.name }}</h3>
+                <div style="font-size:13.5px;color:#8A8375">{{ pr.loc }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ ABOUT ============ -->
+    <sc-if value="{{ isAbout }}">
+      <section style="background:#16302B;color:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:88px 40px">
+          <div style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ t.ph.about.overline }}</div>
+          <h1 class="serif" style="font-weight:400;font-size:clamp(38px,5vw,62px);letter-spacing:-.01em;margin:18px 0 0;line-height:1.05">{{ t.ph.about.title }}</h1>
+          <p style="font-size:17px;color:#CFD4C9;max-width:600px;margin:18px 0 0;font-weight:300">{{ t.ph.about.sub }}</p>
+        </div>
+      </section>
+      <section style="background:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:96px 40px;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center">
+          <div>
+            <p class="serif" style="font-size:23px;line-height:1.5;color:#1C302B;margin:0 0 24px;font-weight:400">{{ t.aboutBody.p1 }}</p>
+            <p style="font-size:16px;color:#5C665C;margin:0;font-weight:300">{{ t.aboutBody.p2 }}</p>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:40px">
+              <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+                <div style="border-top:1px solid rgba(28,48,43,.2);padding-top:16px">
+                  <div class="serif" style="font-weight:400;font-size:36px;color:#1C302B;line-height:1">{{ s.n }}</div>
+                  <div style="font-size:13.5px;color:#8A8375;margin-top:5px">{{ s.l }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <image-slot id="eridan-about" src="assets/about.png" shape="rect" placeholder="Ảnh nhà máy / đội ngũ" style="width:100%;aspect-ratio:4/5"></image-slot>
+        </div>
+      </section>
+      <section style="background:#EDE7D9">
+        <div style="max-width:1240px;margin:0 auto;padding:92px 40px">
+          <h2 class="serif" style="font-weight:400;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.01em;margin:0 0 48px;color:#1C302B">{{ t.aboutBody.valuesTitle }}</h2>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:36px">
+            <sc-for list="{{ valuesIdx }}" as="v" hint-placeholder-count="4">
+              <div style="border-top:1px solid rgba(28,48,43,.24);padding-top:22px">
+                <div class="serif" style="font-size:15px;color:var(--accent,#B08341);margin-bottom:14px">{{ v.no }}</div>
+                <h3 class="serif" style="font-weight:400;font-size:21px;margin:0 0 10px;color:#1C302B">{{ v.title }}</h3>
+                <p style="font-size:14px;color:#5C665C;margin:0;font-weight:300">{{ v.desc }}</p>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:60px;border-top:1px solid rgba(28,48,43,.16);padding-top:36px">
+            <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#8A8375;font-weight:600;margin-bottom:22px">{{ t.capsTitle }}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:28px 40px">
+              <sc-for list="{{ caps }}" as="c" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:11px;font-size:15.5px;color:#1C302B;font-weight:400">
+                  <span class="serif" style="color:var(--accent,#B08341);font-size:18px">—</span>{{ c }}
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ============ CONTACT ============ -->
+    <sc-if value="{{ isContact }}">
+      <section style="background:#16302B;color:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:88px 40px">
+          <div style="font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ t.ph.contact.overline }}</div>
+          <h1 class="serif" style="font-weight:400;font-size:clamp(38px,5vw,62px);letter-spacing:-.01em;margin:18px 0 0;line-height:1.05">{{ t.ph.contact.title }}</h1>
+          <p style="font-size:17px;color:#CFD4C9;max-width:600px;margin:18px 0 0;font-weight:300">{{ t.ph.contact.sub }}</p>
+        </div>
+      </section>
+      <section style="background:#F5F1E8">
+        <div style="max-width:1240px;margin:0 auto;padding:80px 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:start">
+          <div>
+            <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+              <h2 class="serif" style="font-weight:400;font-size:30px;margin:0 0 30px;color:#1C302B">{{ t.contact.formTitle }}</h2>
+              <form onSubmit="{{ submit }}">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px">
+                  <label style="display:block">
+                    <span style="display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8A8375;margin-bottom:9px">{{ t.contact.fields.name }}</span>
+                    <input required type="text" style="width:100%;border:none;border-bottom:1px solid rgba(28,48,43,.3);background:transparent;padding:8px 0;font-size:16px;color:#1C302B" />
+                  </label>
+                  <label style="display:block">
+                    <span style="display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8A8375;margin-bottom:9px">{{ t.contact.fields.phone }}</span>
+                    <input required type="tel" style="width:100%;border:none;border-bottom:1px solid rgba(28,48,43,.3);background:transparent;padding:8px 0;font-size:16px;color:#1C302B" />
+                  </label>
+                  <label style="display:block">
+                    <span style="display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8A8375;margin-bottom:9px">{{ t.contact.fields.email }}</span>
+                    <input type="email" style="width:100%;border:none;border-bottom:1px solid rgba(28,48,43,.3);background:transparent;padding:8px 0;font-size:16px;color:#1C302B" />
+                  </label>
+                  <label style="display:block">
+                    <span style="display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8A8375;margin-bottom:9px">{{ t.contact.fields.product }}</span>
+                    <select style="width:100%;border:none;border-bottom:1px solid rgba(28,48,43,.3);background:transparent;padding:8px 0;font-size:16px;color:#1C302B">
+                      <sc-for list="{{ productOpts }}" as="o" hint-placeholder-count="6">
+                        <option>{{ o }}</option>
+                      </sc-for>
+                    </select>
+                  </label>
+                </div>
+                <label style="display:block;margin-top:26px">
+                  <span style="display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#8A8375;margin-bottom:9px">{{ t.contact.fields.message }}</span>
+                  <textarea rows="3" style="width:100%;border:none;border-bottom:1px solid rgba(28,48,43,.3);background:transparent;padding:8px 0;font-size:16px;color:#1C302B;resize:vertical"></textarea>
+                </label>
+                <button type="submit" style="cursor:pointer;margin-top:34px;background:#16302B;color:#F5F1E8;border:none;font-weight:500;font-size:15px;padding:15px 38px;letter-spacing:.02em">{{ t.contact.button }} →</button>
+              </form>
+            </sc-if>
+            <sc-if value="{{ submitted }}">
+              <div style="padding:30px 0">
+                <div class="serif" style="font-size:44px;color:var(--accent,#B08341);line-height:1">✓</div>
+                <h2 class="serif" style="font-weight:400;font-size:30px;margin:20px 0 12px;color:#1C302B">{{ t.contact.thankTitle }}</h2>
+                <p style="font-size:16px;color:#5C665C;margin:0;max-width:420px;font-weight:300">{{ t.contact.thankMsg }}</p>
+              </div>
+            </sc-if>
+          </div>
+          <div>
+            <div style="background:#16302B;color:#F5F1E8;padding:40px 36px">
+              <h3 class="serif" style="font-weight:400;font-size:22px;margin:0 0 8px">{{ t.contact.infoTitle }}</h3>
+              <sc-for list="{{ contactInfo }}" as="i" hint-placeholder-count="4">
+                <div style="padding:18px 0;border-top:1px solid rgba(245,241,232,.14)">
+                  <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent,#B08341);font-weight:600">{{ i.label }}</div>
+                  <div style="font-size:15.5px;color:#E4E7DE;margin-top:5px;font-weight:300">{{ i.value }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:26px;overflow:hidden;height:210px;position:relative;background:#EDE7D9">
+              <image-slot id="eridan-map" src="assets/map.png" shape="rect" placeholder="{{ t.contact.mapNote }}" style="position:absolute;inset:0;width:100%;height:100%"></image-slot>
+            </div>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+  </main>
+
+  <footer style="background:#16302B;color:#A9B3A6">
+    <div style="max-width:1240px;margin:0 auto;padding:72px 40px 34px;display:grid;grid-template-columns:1.7fr 1fr 1.2fr;gap:48px">
+      <div>
+        <div class="serif" style="font-weight:400;font-size:24px;letter-spacing:.24em;color:#F5F1E8">ERIDAN</div>
+        <div style="font-size:9.5px;letter-spacing:.34em;color:#7C877B;font-weight:500;margin:5px 0 20px">PONTOON&nbsp;·&nbsp;MARINA&nbsp;·&nbsp;PLATFORM</div>
+        <p style="font-size:14.5px;max-width:380px;margin:0;font-weight:300">{{ t.footer.blurb }}</p>
+      </div>
+      <div>
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#F5F1E8;font-weight:600;margin-bottom:18px">{{ t.footer.linksTitle }}</div>
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <div onClick="{{ item.onClick }}" style="cursor:pointer;font-size:14.5px;padding:7px 0;color:#A9B3A6;font-weight:300">{{ item.label }}</div>
+        </sc-for>
+      </div>
+      <div>
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#F5F1E8;font-weight:600;margin-bottom:18px">{{ t.footer.contactTitle }}</div>
+        <sc-for list="{{ contactInfo }}" as="i" hint-placeholder-count="4">
+          <div style="font-size:14.5px;padding:6px 0;font-weight:300"><span style="color:#7C877B">{{ i.label }}: </span>{{ i.value }}</div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(245,241,232,.1)">
+      <div style="max-width:1240px;margin:0 auto;padding:22px 40px;font-size:12.5px;color:#7C877B">{{ t.footer.rights }}</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#B08341&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#B08341&quot;,&quot;#3A5A55&quot;,&quot;#9E6B4A&quot;,&quot;#5C7C74&quot;]},&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;default&quot;:&quot;vi&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { page: 'home', lang: (this.props.defaultLang === 'en' ? 'en' : 'vi'), submitted: false };
+
+  applyAccent(){ try { document.documentElement.style.setProperty('--accent', this.props.accent || '#B08341'); } catch(e){} }
+  componentDidMount(){ this.applyAccent(); }
+  componentDidUpdate(){ this.applyAccent(); }
+
+  go(page){ this.setState({ page: page, submitted: false }); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch(e){} }
+  submit(e){ if (e && e.preventDefault) e.preventDefault(); this.setState({ submitted: true }); }
+
+  renderVals(){
+    const page = this.state.page;
+    const lang = this.state.lang;
+
+    const DICT = {
+      vi: {
+        nav: { home:'Trang chủ', products:'Sản phẩm', projects:'Dự án', about:'Giới thiệu', contact:'Liên hệ' },
+        cta: 'Nhận báo giá',
+        top: { tagline:'Giải pháp cầu phao nổi & bến du thuyền HDPE hàng đầu Việt Nam', phone:'Hotline: 1900 6789' },
+        hero: {
+          overline:'ERIDAN — Pontoon Solutions',
+          title:'Kiến tạo công trình nổi bền vững trên mọi mặt nước',
+          sub:'ERIDAN thiết kế, sản xuất và thi công trọn gói hệ thống cầu phao nổi HDPE, bến du thuyền và sàn nổi đa năng — module hoá, chịu tải cao, lắp đặt nhanh.',
+          ctaPrimary:'Nhận tư vấn & báo giá', ctaSecondary:'Xem dự án tiêu biểu'
+        },
+        stats: [ {n:'15+',l:'Năm kinh nghiệm'}, {n:'200+',l:'Dự án bàn giao'}, {n:'50.000+',l:'m² mặt sàn nổi'}, {n:'34',l:'Tỉnh thành phục vụ'} ],
+        prodSection: { overline:'Sản phẩm & Giải pháp', title:'Hệ sinh thái công trình nổi trọn gói', sub:'Từ cầu phao dân sinh đến bến du thuyền tiêu chuẩn quốc tế — tất cả trên nền tảng module HDPE bền vững.' },
+        products: [
+          {tag:'HDPE', title:'Cầu phao nổi HDPE', desc:'Phao nổi module HDPE nguyên sinh, chống UV, chịu tải lớn, ghép nối linh hoạt cho mọi địa hình mặt nước.'},
+          {tag:'MARINA', title:'Bến du thuyền (Marina)', desc:'Hệ thống neo đậu du thuyền, ca nô đạt chuẩn quốc tế với phao chính, finger và trụ dẫn hướng.'},
+          {tag:'PLATFORM', title:'Sàn nổi đa năng', desc:'Sân khấu nổi, cafe nổi, bể bơi nổi, đường dạo nổi — tuỳ biến theo công năng và tải trọng.'},
+          {tag:'RESORT', title:'Nhà nổi & Bungalow nổi', desc:'Kết cấu nhà nổi cho khu nghỉ dưỡng, an toàn và ổn định trong điều kiện sóng gió.'},
+          {tag:'JETTY', title:'Cầu tàu & cầu dẫn', desc:'Cầu dẫn (gangway) lên xuống theo thuỷ triều, lan can và mặt sàn chống trượt.'},
+          {tag:'PARTS', title:'Neo đậu & phụ kiện', desc:'Hệ neo, xích, phao neo, cọc dẫn hướng, khớp nối và phụ kiện đồng bộ chính hãng.'}
+        ],
+        whySection: { overline:'Vì sao chọn ERIDAN', title:'Bền vững, an toàn và linh hoạt' },
+        why: [
+          {title:'Vật liệu HDPE cao cấp', desc:'HDPE nguyên sinh chống tia UV, không thấm, không han gỉ, tuổi thọ trên 25 năm.'},
+          {title:'Module hoá linh hoạt', desc:'Ghép nối tự do theo diện tích và hình dạng, dễ mở rộng, di dời và tái sử dụng.'},
+          {title:'Chịu tải & an toàn cao', desc:'Kết cấu tính toán theo tải trọng thực tế, ổn định trong sóng gió.'},
+          {title:'Thi công nhanh gọn', desc:'Lắp ghép tại chỗ, không cần thiết bị nặng, rút ngắn tiến độ và chi phí.'}
+        ],
+        projSection: { overline:'Dự án tiêu biểu', title:'Những công trình chúng tôi tự hào', all:'Xem tất cả dự án →' },
+        projects: [
+          {name:'Bến du thuyền Hạ Long', cat:'Marina', loc:'Quảng Ninh'},
+          {name:'Sàn nổi sự kiện Hồ Tây', cat:'Sàn nổi', loc:'Hà Nội'},
+          {name:'Cầu phao du lịch Phong Nha', cat:'Cầu phao', loc:'Quảng Bình'},
+          {name:'Khu nghỉ dưỡng nổi Phú Quốc', cat:'Nhà nổi', loc:'Kiên Giang'},
+          {name:'Bến ca nô Đà Nẵng', cat:'Marina', loc:'Đà Nẵng'},
+          {name:'Cafe nổi hồ Xuân Hương', cat:'Sàn nổi', loc:'Lâm Đồng'}
+        ],
+        procSection: { overline:'Quy trình', title:'Trọn gói từ khảo sát đến bàn giao' },
+        process: [
+          {n:'01', title:'Khảo sát & tư vấn', desc:'Đánh giá mặt nước, thuỷ văn và nhu cầu sử dụng.'},
+          {n:'02', title:'Thiết kế & mô phỏng', desc:'Bản vẽ kỹ thuật, tính toán tải trọng và neo đậu.'},
+          {n:'03', title:'Sản xuất', desc:'Gia công module HDPE tại nhà máy đạt chuẩn.'},
+          {n:'04', title:'Lắp đặt', desc:'Thi công, neo đậu và bàn giao tại công trình.'},
+          {n:'05', title:'Bảo trì', desc:'Bảo hành dài hạn và bảo trì định kỳ.'}
+        ],
+        ctaBand: { title:'Sẵn sàng cho dự án nổi của bạn?', sub:'Nhận tư vấn kỹ thuật và báo giá chi tiết trong 24 giờ.', btn:'Liên hệ ngay', phone:'hoặc gọi Hotline 1900 6789' },
+        ph: {
+          products: { overline:'Sản phẩm', title:'Giải pháp công trình nổi HDPE', sub:'Sáu dòng sản phẩm cốt lõi, tuỳ biến cho từng công trình.' },
+          projects: { overline:'Dự án', title:'Công trình đã bàn giao', sub:'Tuyển tập các dự án cầu nổi, marina và sàn nổi tiêu biểu.' },
+          about: { overline:'Về chúng tôi', title:'Công ty Cổ phần ERIDAN', sub:'Đối tác tin cậy cho mọi công trình trên mặt nước.' },
+          contact: { overline:'Liên hệ', title:'Nhận báo giá & tư vấn', sub:'Để lại thông tin, đội ngũ kỹ sư ERIDAN sẽ phản hồi trong 24 giờ.' }
+        },
+        aboutBody: {
+          p1:'Công ty Cổ phần ERIDAN chuyên thiết kế, sản xuất và thi công các giải pháp công trình nổi trên nền tảng vật liệu HDPE cao cấp: cầu phao nổi, bến du thuyền, sàn nổi đa năng và nhà nổi.',
+          p2:'Với hơn 15 năm kinh nghiệm và hơn 200 dự án bàn giao trên khắp cả nước, ERIDAN cam kết mang đến những công trình bền vững, an toàn và thân thiện với môi trường.',
+          valuesTitle:'Giá trị cốt lõi'
+        },
+        values: [
+          {title:'Chất lượng', desc:'Vật liệu và quy trình đạt chuẩn, kiểm soát nghiêm ngặt.'},
+          {title:'An toàn', desc:'Ưu tiên hàng đầu trong thiết kế và thi công.'},
+          {title:'Bền vững', desc:'Giải pháp thân thiện môi trường, tuổi thọ dài.'},
+          {title:'Tận tâm', desc:'Đồng hành cùng khách hàng từ ý tưởng đến vận hành.'}
+        ],
+        capsTitle:'Năng lực & Chứng nhận',
+        caps: ['ISO 9001:2015', 'HDPE nguyên sinh đạt chuẩn', 'Đội ngũ kỹ sư chuyên trách', 'Bảo hành đến 10 năm'],
+        contact: {
+          formTitle:'Gửi yêu cầu báo giá',
+          fields: { name:'Họ và tên', phone:'Số điện thoại', email:'Email', product:'Sản phẩm quan tâm', message:'Nội dung yêu cầu' },
+          productOpts:['Cầu phao nổi HDPE','Bến du thuyền (Marina)','Sàn nổi đa năng','Nhà nổi','Cầu tàu & cầu dẫn','Khác'],
+          button:'Gửi yêu cầu',
+          thankTitle:'Cảm ơn bạn!',
+          thankMsg:'Yêu cầu đã được ghi nhận. Đội ngũ ERIDAN sẽ liên hệ trong thời gian sớm nhất.',
+          infoTitle:'Thông tin liên hệ',
+          info: [
+            {label:'Trụ sở', value:'Lô X, KCN ABC, Việt Nam'},
+            {label:'Hotline', value:'1900 6789'},
+            {label:'Email', value:'info@eridan.vn'},
+            {label:'Giờ làm việc', value:'T2 – T7, 8:00 – 17:30'}
+          ],
+          mapNote:'Bản đồ / vị trí văn phòng'
+        },
+        footer: {
+          blurb:'ERIDAN — Giải pháp cầu phao nổi, bến du thuyền và sàn nổi HDPE trọn gói trên khắp Việt Nam.',
+          linksTitle:'Liên kết', contactTitle:'Liên hệ',
+          rights:'© 2026 Công ty Cổ phần ERIDAN. Bảo lưu mọi quyền.'
+        }
+      },
+      en: {
+        nav: { home:'Home', products:'Products', projects:'Projects', about:'About', contact:'Contact' },
+        cta: 'Get a quote',
+        top: { tagline:"Vietnam's leading HDPE floating pontoon & marina solutions", phone:'Hotline: 1900 6789' },
+        hero: {
+          overline:'ERIDAN — Pontoon Solutions',
+          title:'Building durable floating structures on any water surface',
+          sub:'ERIDAN designs, manufactures and installs turnkey HDPE floating pontoons, marinas and multi-purpose platforms — modular, high load capacity, fast to install.',
+          ctaPrimary:'Get consultation & quote', ctaSecondary:'View featured projects'
+        },
+        stats: [ {n:'15+',l:'Years of experience'}, {n:'200+',l:'Projects delivered'}, {n:'50,000+',l:'m² of floating decks'}, {n:'34',l:'Provinces served'} ],
+        prodSection: { overline:'Products & Solutions', title:'A complete floating-structure ecosystem', sub:'From public pontoons to international-standard marinas — all built on a durable modular HDPE platform.' },
+        products: [
+          {tag:'HDPE', title:'HDPE Floating Pontoons', desc:'Virgin HDPE modular floats — UV-resistant, high load capacity, flexibly connected for any water terrain.'},
+          {tag:'MARINA', title:'Marina Berths', desc:'International-standard yacht and boat mooring systems with main floats, fingers and guide piles.'},
+          {tag:'PLATFORM', title:'Multi-purpose Platforms', desc:'Floating stages, cafés, pools and walkways — customized to function and load requirements.'},
+          {tag:'RESORT', title:'Floating Houses & Bungalows', desc:'Floating house structures for resorts — safe and stable in wind and waves.'},
+          {tag:'JETTY', title:'Jetties & Gangways', desc:'Tide-adjusting gangways, jetties, railings and anti-slip decking.'},
+          {tag:'PARTS', title:'Anchoring & Accessories', desc:'Anchor systems, chains, buoys, guide piles, connectors and genuine accessories.'}
+        ],
+        whySection: { overline:'Why ERIDAN', title:'Durable, safe and flexible' },
+        why: [
+          {title:'Premium HDPE material', desc:'Virgin HDPE — UV-resistant, waterproof, rust-free, 25+ year lifespan.'},
+          {title:'Flexible modularity', desc:'Freely assembled by area and shape, easy to expand, relocate and reuse.'},
+          {title:'High load & safety', desc:'Structures engineered to real load, stable in wind and waves.'},
+          {title:'Fast installation', desc:'On-site assembly without heavy machinery — shorter timelines, lower cost.'}
+        ],
+        projSection: { overline:'Featured projects', title:'Projects we are proud of', all:'View all projects →' },
+        projects: [
+          {name:'Ha Long Marina', cat:'Marina', loc:'Quang Ninh'},
+          {name:'West Lake Floating Stage', cat:'Platform', loc:'Hanoi'},
+          {name:'Phong Nha Tourist Pontoon', cat:'Pontoon', loc:'Quang Binh'},
+          {name:'Phu Quoc Floating Resort', cat:'Floating house', loc:'Kien Giang'},
+          {name:'Da Nang Boat Berth', cat:'Marina', loc:'Da Nang'},
+          {name:'Xuan Huong Floating Café', cat:'Platform', loc:'Lam Dong'}
+        ],
+        procSection: { overline:'Process', title:'Turnkey from survey to handover' },
+        process: [
+          {n:'01', title:'Survey & consult', desc:'Assess water conditions, hydrology and needs.'},
+          {n:'02', title:'Design & simulate', desc:'Technical drawings, load and anchoring calculations.'},
+          {n:'03', title:'Manufacture', desc:'HDPE modules produced at a certified factory.'},
+          {n:'04', title:'Install', desc:'Construction, anchoring and on-site handover.'},
+          {n:'05', title:'Maintain', desc:'Long warranty and periodic maintenance.'}
+        ],
+        ctaBand: { title:'Ready for your floating project?', sub:'Get technical consultation and a detailed quote within 24 hours.', btn:'Contact now', phone:'or call Hotline 1900 6789' },
+        ph: {
+          products: { overline:'Products', title:'HDPE floating-structure solutions', sub:'Six core product lines, customized for every project.' },
+          projects: { overline:'Projects', title:'Delivered projects', sub:'A selection of our featured pontoon, marina and platform projects.' },
+          about: { overline:'About us', title:'ERIDAN Joint Stock Company', sub:'A trusted partner for every structure on the water.' },
+          contact: { overline:'Contact', title:'Get a quote & consultation', sub:"Leave your details — ERIDAN's engineers will respond within 24 hours." }
+        },
+        aboutBody: {
+          p1:'ERIDAN Joint Stock Company specializes in designing, manufacturing and installing floating-structure solutions built on premium HDPE: floating pontoons, marinas, multi-purpose platforms and floating houses.',
+          p2:'With over 15 years of experience and 200+ projects delivered nationwide, ERIDAN is committed to durable, safe and environmentally friendly structures.',
+          valuesTitle:'Core values'
+        },
+        values: [
+          {title:'Quality', desc:'Certified materials and processes, tightly controlled.'},
+          {title:'Safety', desc:'The top priority in design and construction.'},
+          {title:'Sustainability', desc:'Eco-friendly solutions with a long lifespan.'},
+          {title:'Dedication', desc:'With clients from idea to operation.'}
+        ],
+        capsTitle:'Capabilities & Certifications',
+        caps: ['ISO 9001:2015', 'Certified virgin HDPE', 'Dedicated engineering team', 'Up to 10-year warranty'],
+        contact: {
+          formTitle:'Request a quote',
+          fields: { name:'Full name', phone:'Phone number', email:'Email', product:'Product of interest', message:'Your message' },
+          productOpts:['HDPE Floating Pontoons','Marina Berths','Multi-purpose Platforms','Floating Houses','Jetties & Gangways','Other'],
+          button:'Send request',
+          thankTitle:'Thank you!',
+          thankMsg:'Your request has been received. The ERIDAN team will contact you shortly.',
+          infoTitle:'Contact information',
+          info: [
+            {label:'Head office', value:'Lot X, ABC Industrial Park, Vietnam'},
+            {label:'Hotline', value:'1900 6789'},
+            {label:'Email', value:'info@eridan.vn'},
+            {label:'Working hours', value:'Mon – Sat, 8:00 – 17:30'}
+          ],
+          mapNote:'Map / office location'
+        },
+        footer: {
+          blurb:'ERIDAN — Turnkey HDPE floating pontoon, marina and platform solutions across Vietnam.',
+          linksTitle:'Links', contactTitle:'Contact',
+          rights:'© 2026 ERIDAN Joint Stock Company. All rights reserved.'
+        }
+      }
+    };
+
+    const t = DICT[lang] || DICT.vi;
+    const pad = (i) => String(i + 1).padStart(2, '0');
+
+    const navKeys = ['home','products','projects','about','contact'];
+    const navItems = navKeys.map((k) => ({
+      key: k,
+      label: t.nav[k],
+      onClick: () => this.go(k),
+      style: {
+        cursor:'pointer', fontFamily:"'Be Vietnam Pro',sans-serif", fontSize:'14.5px', fontWeight:500,
+        letterSpacing:'0.01em', padding:'4px 0', whiteSpace:'nowrap',
+        color: page===k ? 'var(--accent,#B08341)' : '#1C302B',
+        borderBottom: page===k ? '1px solid var(--accent,#B08341)' : '1px solid transparent'
+      }
+    }));
+
+    const R = (typeof window !== 'undefined' && window.__resources) || {};
+    const projImgs = [R.projMarina||'assets/proj-marina.png', R.projPlatform||'assets/proj-platform.png', R.projBridge||'assets/proj-bridge.png', R.projBungalow||'assets/proj-bungalow.png', R.projBerth||'assets/proj-berth.png', R.projCafe||'assets/proj-cafe.png'];
+    const projects = t.projects.map((p, i) => ({ ...p, id: 'eridan-proj-' + i, img: projImgs[i] }));
+    const projectsHome = projects.slice(0, 3).map((p) => ({ ...p, id: p.id + '-home' }));
+    const productsIdx = t.products.map((p, i) => ({ ...p, no: pad(i) }));
+    const whyIdx = t.why.map((w, i) => ({ ...w, no: pad(i) }));
+    const valuesIdx = t.values.map((v, i) => ({ ...v, no: pad(i) }));
+
+    return {
+      lang, t, page,
+      isHome: page==='home', isProducts: page==='products', isProjects: page==='projects', isAbout: page==='about', isContact: page==='contact',
+      navItems,
+      langLabel: lang==='vi' ? 'EN' : 'VI',
+      toggleLang: () => this.setState((s) => ({ lang: s.lang==='vi' ? 'en' : 'vi' })),
+      goHome: () => this.go('home'),
+      goProducts: () => this.go('products'),
+      goProjects: () => this.go('projects'),
+      goContact: () => this.go('contact'),
+      submit: (e) => this.submit(e),
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      products: t.products,
+      productsIdx, whyIdx, valuesIdx,
+      projects,
+      projectsHome,
+      why: t.why, process: t.process, stats: t.stats, caps: t.caps, values: t.values,
+      productOpts: t.contact.productOpts,
+      contactInfo: t.contact.info
+    };
+  }
+}
+</script>
+</body>
+</html>

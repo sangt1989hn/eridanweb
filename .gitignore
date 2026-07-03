@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+.thumbnail
+
+# Editor / OS
+Thumbs.db
+*.swp
+
+# Dependencies (none currently — static site)
+node_modules/
